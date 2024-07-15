@@ -12,9 +12,6 @@ function(add_subdirectory_checked dir)
     add_subdirectory(${dir})
 endfunction()
 
-#Options
-option(GLFWPP_BUILD_EXAMPLES "Should examples be built" ON)
-
 #Create library target
 add_library(GLFWPP INTERFACE)
 target_include_directories(GLFWPP INTERFACE include)
@@ -33,12 +30,3 @@ else()
     target_link_libraries(GLFWPP INTERFACE glfw)
 endif()
 
-#Build examples
-if (GLFWPP_BUILD_EXAMPLES)
-    if (NOT (CMAKE_SYSTEM_NAME STREQUAL "Emscripten"))
-        add_subdirectory_checked(${CMAKE_CURRENT_SOURCE_DIR}/external/glew-cmake)
-    endif()
-    add_subdirectory_checked(${CMAKE_CURRENT_SOURCE_DIR}/external/imgui)
-
-    add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/examples)
-endif ()
